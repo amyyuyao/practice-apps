@@ -6,14 +6,14 @@ const app = express();
 
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-/****
- *
- *
- * Other routes here....
- *
- *
- */
+
+app.post('/glossary' (req, res) => {
+  console.log(req.body);
+
+})
 
 
 app.listen(process.env.PORT);
