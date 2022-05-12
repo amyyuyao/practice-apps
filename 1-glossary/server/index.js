@@ -8,29 +8,30 @@ const app = express();
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+// app.use(express.urlencoded({extended: true}));
 
 
 app.post('/glossary', function (req, res) {
-  console.log("success!!!!!!!!!!!!!!!!!");
-  save(res)
+  console.log(req.body);
+  save(req.body)
   .then(() => {
     res.sendStatus(201);
   })
   .catch((err) => {
     console.log("POST failed!");
-  })
+  });
 });
 
 app.get('/glossary', function(req, res) {
   console.log("SUCCESS");
   getAll()
   .then((data) => {
+    console.log(data);
     res.status(200).send(data);
   })
   .catch((err) => {
     console.log("GET failed!");
-  })
+  });
 });
 
 app.listen(process.env.PORT);

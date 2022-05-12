@@ -4,10 +4,9 @@ var WordList = ({ data }) => (
   <div>
     {data.map((item) => (
       <ul key={item.id}>
-        <li>{item.word}</li>
-        <li>{item.definition}</li>
+        <h4>{item.word}</h4>
+        <li>definition: {item.definition}</li>
       </ul>
-
     ))}
   </div>
 );

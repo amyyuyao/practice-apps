@@ -9,7 +9,8 @@ class Form extends React.Component {
       inputDef: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleWordChange = this.handleWordChange.bind(this);
+    this.handleDefChange = this.handleDefChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -28,8 +29,7 @@ class Form extends React.Component {
   handleSubmit() {
     alert('A word was submitted: ' + this.state.inputWord);
     // event.preventDefault();
-    this.props.onSubmit(this.state.inputWord);
-    this.props.onSubmit(this.state.inputDef);
+    this.props.onSubmit(this.state.inputWord, this.state.inputDef);
   }
 
   render() {
@@ -37,11 +37,11 @@ class Form extends React.Component {
       <h4>Add more words!</h4>
         <label>
             word:
-            <input type="text" value={this.stata.inputWord} onChange={this.handleWordChange} />
+            <input type="text" value={this.state.inputWord} onChange={this.handleWordChange} />
         </label>
         <label>
             definition:
-            <input type="text" value={this.stata.inputWord} onChange={this.handleDefChange} />
+            <input type="text" value={this.state.inputDef} onChange={this.handleDefChange} />
         </label>
         <button onClick={this.handleSubmit}> Add Words </button>
       </div>)

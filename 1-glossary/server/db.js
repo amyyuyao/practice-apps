@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:3000/glossary');
+mongoose.connect('mongodb://localhost/glossary');
 // const axios from 'axios';
 
 // 1. Use mongoose to establish a connection to MongoDB
@@ -8,16 +8,15 @@ mongoose.connect('mongodb://localhost:3000/glossary');
 // 4. Import the models into any modules that need them
 
 let glossarySchema = mongoose.Schema({
-  id: { type: Number, unique: true },
-  word: String,
-  definition: String
+  word: { type: String, unique: true, required: true },
+  definition: { type: String, required: true }
 })
 
 let Glossary = mongoose.model('Glossary', glossarySchema);
 
 var save = function (data) {
-  return Glossary.findOneAndUpdate(
-    { id: data.id },
+  return Glossary.updateOne(
+    {},
     {
       word: data.word,
       definition: data.definition
@@ -27,9 +26,9 @@ var save = function (data) {
 
 var getAll = function () {
   return Glossary.find({})
-  .sort({ id: -1 })
-  .limit(10)
-  .exec();
+    .sort({ id: -1 })
+    .limit(10)
+    .exec();
 }
 
 module.exports = {
