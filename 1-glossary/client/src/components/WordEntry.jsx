@@ -45,7 +45,8 @@ class WordEntry extends React.Component {
   render() {
     return (
       <table>
-        <tr>
+        <tbody>
+          <tr>
         { this.state.editable === 'true'
           ? (<>
             <td><input type="text" onChange={this.handleWordChange} value={this.state.word}/></td>
@@ -59,6 +60,7 @@ class WordEntry extends React.Component {
           </>)
         }
         </tr>
+        </tbody>
       </table>
     )
   }
