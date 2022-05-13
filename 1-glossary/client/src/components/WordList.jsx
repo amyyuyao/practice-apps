@@ -1,12 +1,15 @@
 import React from "react";
+import WordEntry from './WordEntry.jsx';
 
-var WordList = ({ data }) => (
+
+var WordList = ({ data, onEdit }) => (
   <div>
-    {data.map((item) => (
-      <ul key={item.id}>
-        <h4>{item.word}</h4>
-        <li>definition: {item.definition}</li>
-      </ul>
+    {data.map((entry) => (
+      <WordEntry
+        entry={entry}
+        key={entry._id}
+        onEdit={onEdit}
+      />
     ))}
   </div>
 );

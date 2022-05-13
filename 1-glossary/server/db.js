@@ -8,15 +8,15 @@ mongoose.connect('mongodb://localhost/glossary');
 // 4. Import the models into any modules that need them
 
 let glossarySchema = mongoose.Schema({
-  word: { type: String, unique: true, required: true },
-  definition: { type: String, required: true }
+  word: String,
+  definition: String
 })
 
 let Glossary = mongoose.model('Glossary', glossarySchema);
 
 var save = function (data) {
   return Glossary.updateOne(
-    {},
+    { word: data.word },
     {
       word: data.word,
       definition: data.definition
@@ -25,13 +25,31 @@ var save = function (data) {
 }
 
 var getAll = function () {
-  return Glossary.find({})
-    .sort({ id: -1 })
-    .limit(10)
-    .exec();
+  return Glossary.find({});
+    // .sort({ word: -1 })
+    // .limit(10)
+    // .exec();
 }
+
+var filter = function (data) {
+  return Glossary.find({ word: data.word });
+    // .sort({ word: -1 })
+    // .limit(10)
+    // .exec();
+}
+
+
+// var getOne = function (data) {
+//   {word: data.word},
+//   {
+//     word: data.word,
+//     definition: data.definition
+//   },
+//   { upsert: true };
+// }
 
 module.exports = {
   save,
   getAll,
+  filter,
 };

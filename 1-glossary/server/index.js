@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
-const { save, getAll } = require("./db.js");
+const { save, getAll, filter } = require("./db.js");
 
 const app = express();
 
@@ -12,27 +12,47 @@ app.use(express.json());
 
 
 app.post('/glossary', function (req, res) {
-  console.log(req.body);
   save(req.body)
   .then(() => {
-    res.sendStatus(201);
+    res.sendStatus(200);
   })
   .catch((err) => {
-    console.log("POST failed!");
+    console.log(err);
   });
 });
 
 app.get('/glossary', function(req, res) {
-  console.log("SUCCESS");
   getAll()
   .then((data) => {
-    console.log(data);
     res.status(200).send(data);
   })
   .catch((err) => {
-    console.log("GET failed!");
+    console.log(err);
   });
 });
+
+// app.post('/words', function (req, res) {
+//   console.log(req.body);
+//   filter(req.body)
+//   .then(() => {
+//     res.sendStatus(200);
+//   })
+//   .catch((err) => {
+//     console.log("POST failed!");
+//   });
+// });
+
+// app.get('/words', function(req, res) {
+//   console.log(req.body);
+//   filter(req.body)
+//   .then((data) => {
+//     // console.log(data);
+//     res.status(200).send(data);
+//   })
+//   .catch((err) => {
+//     console.log("GET failed!");
+//   });
+// });
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);

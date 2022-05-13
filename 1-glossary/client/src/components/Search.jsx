@@ -1,21 +1,36 @@
-import React from "react";
+import React from 'react';
 
-// class Search extends React.Component {
-//   constructor(props) {
-//     super(props);
+class Search extends React.Component {
+  constructor(props) {
+    super(props);
 
-//     this.state = {
-//       text = ''
-//     };
-//   }
+    this.state = {
+      term: ''
+    };
 
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
 
+  handleSearchChange(e) {
+    this.setState({
+      term: e.target.value
+    })
+  }
 
-//   render () {
-//     return (
+  handleSearch() {
+    alert('A word was searched');
+    this.props.onSearch(this.state.term);
+  }
 
-//     )
-//   }
-// }
+  render() {
+    return (<div>
+        <label>
+            <input type="text" value={this.state.term} onChange={this.handleSearchChange} />
+        </label>
+        <button onClick={this.handleSearch}> Search </button>
+      </div>)
+  }
+}
 
-export default React;
+export default Search;
