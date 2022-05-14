@@ -6,62 +6,39 @@ class F1 extends React.Component {
 
     this.state = {
       contact: {
-        contact_name: '',
-        contact_email: '',
-        contact_password: ''
+        contact_name: props.data[0].contact_name,
+        contact_email: props.data[0].contact_email,
+        contact_password: props.data[0].contact_password,
       },
       edited: "false"
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
   }
 
   handleChange(e) {
-    const { newContact } = this.state;
-    newContact[e.target.name] = e.target.value;
-    this.setState({ newContact });
-  }
-
-  handleSubmit() {
-    this.setState({
-      edited: "true"
-    })
-  }
-
-  handleEdit() {
-    this.setState({
-      edited: "false"
-    })
+    const { contact } = this.state;
+    contact[e.target.name] = e.target.value;
+    this.setState({ contact });
   }
 
   render() {
     return (
       <>
-      <h3>Contact information</h3>
-      <table>
-        <tbody>
-          <tr>
-          {this.state.edited === "true" ?
-            (<>
-              <td>{this.state.contact['contact_name']}</td>
-              <td>{this.state.contact.contact_email}</td>
-              <td>hello</td>
-              <td>{this.state.contact.contact_password}</td>
-              <button onClick={this.handleEdit}> Edit </button>
-            </>
-            ) : (
-              <>
-                <td><input type="text" placeholder="name" onChange={this.handleChange} />{' '}</td>
-                <td><input type="text" placeholder="email" onChange={this.handleChange} />{' '}</td>
-                <td><input type="text" placeholder="password" onChange={this.handleChange} />{' '}</td>
-                <button onClick={this.handleSubmit}> Next </button>
-              </>
-            )}
+        <h4>Contact information</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td><input type="text" placeholder="name" onChange={this.handleChange} />{' '}</td>
             </tr>
-        </tbody>
-      </table >
+            <tr>
+              <td><input type="text" placeholder="email" onChange={this.handleChange} />{' '}</td>
+            </tr>
+            <tr>
+              <td><input type="text" placeholder="password" onChange={this.handleChange} />{' '}</td>
+            </tr>
+          </tbody>
+        </table >
       </>
     )
   }

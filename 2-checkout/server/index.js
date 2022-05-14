@@ -5,7 +5,7 @@ const sessionHandler = require("./middleware/session-handler");
 const logger = require("./middleware/logger");
 
 // Establishes connection to the database on server start
-const db = require("./db");
+const { save, getAll } = require("./db");
 
 const app = express();
 
@@ -19,13 +19,32 @@ app.use(logger);
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-/**** 
- * 
- * 
- * Other routes here....
- *
- * 
- */
+app.use(express.json());
+
+app.post("/checkout", (req, res) => {
+  // console.log(req.body);
+  save(req.body)
+  .then(() => {
+    res.sendStatus(201)
+  })
+  .catch((err) => {
+    // console.log(err);
+    res.status(500).send(err);
+  });
+});
+
+app.get("/checkout", (req, res) => {
+  // console.log(res.data);
+  getAll()
+  .then((data) => {
+    // console.log(data);
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    // console.log(err);
+    res.sendStatus(500);
+  });
+});
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
