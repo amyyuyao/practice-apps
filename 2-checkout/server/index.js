@@ -22,13 +22,13 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 app.use(express.json());
 
 app.post("/checkout", (req, res) => {
-  // console.log(req.body);
+  console.log("This is the request.body looks like: ", req.body);
   save(req.body)
   .then(() => {
     res.sendStatus(201)
   })
   .catch((err) => {
-    // console.log(err);
+    console.log("Error post checkout infos: ", err);
     res.status(500).send(err);
   });
 });
@@ -37,11 +37,11 @@ app.get("/checkout", (req, res) => {
   // console.log(res.data);
   getAll()
   .then((data) => {
-    // console.log(data);
-    res.status(200).send(data);
+    // console.log(data[0][0]);
+    res.status(200).send(data[0][0]);
   })
   .catch((err) => {
-    // console.log(err);
+    console.log("Error get all checkout infos: ", err);
     res.sendStatus(500);
   });
 });

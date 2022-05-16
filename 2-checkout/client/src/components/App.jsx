@@ -10,12 +10,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      checkout: "false",
-      purchase: "false",
-      f1: "false",
-      f2: "false",
-      f3: "false",
-      newData: {
+      data: {
+        cookie_id: document.cookie,
         contact_name: '',
         contact_email: '',
         contact_password: '',
@@ -30,76 +26,77 @@ class App extends React.Component {
         credit_cvv: '',
         credit_billingZip: ''
       },
-      data: []
+      current: "checkout"
     }
-    this.handleCheckout = this.handleCheckout.bind(this);
-    this.handleF1Submit = this.handleF1Submit.bind(this);
-    this.handleF2Submit = this.handleF2Submit.bind(this);
-    this.handleF3Submit = this.handleF3Submit.bind(this);
+
+    this.checkCurrent = this.checkCurrent.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
   }
 
-  componentDidMount() {
-    axios.get('/checkout')
-    .then(data => {
+  checkCurrent() {
+    if (this.state.current === "checkout") {
       this.setState({
-        data: data.data
+        current: "f1"
       });
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    } else if (this.state.current === "f1") {
+      this.setState({
+        current: "f2"
+      });
+    } else if (this.state.current === "f2") {
+      this.setState({
+        current: "f3"
+      });
+    } else if (this.state.current === "f3") {
+      this.setState({
+        current: "purchase"
+      });
+    } else if (this.state.current === "purchase") {
+      this.setState({
+        current: "checkout"
+      });
+    }
   }
 
-  handleCheckout() {
-    this.setState({
-      checkout: "true"
-    })
+  handleChange(e) {
+    const { data } = this.state;
+    data[e.target.name] = e.target.value;
+    this.setState({ data });
   }
 
-  handleF1Submit() {
-    this.setState({
-      f1: "true"
-
-    })
-  }
-
-  handleF2Submit() {
-    this.setState({
-      f2: "true"
-    })
-  }
-
-  handleF3Submit() {
-    this.setState({
-      f3: "true"
-    })
+  getInfos() {
+    axios.get('/checkout')
+      .then(result => {
+        this.setState({
+          data: result
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   handlePurchase() {
-    const { newData } = this.state;
+    const {data} = this.state;
 
-    axios.post('/checkout', newData)
-    .then(data => {
-      console.log(data);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    this.setState({
-      purchase: "true",
-      checkout: "false"
-    })
+    axios.post('/checkout', data)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    this.checkCurrent();
   }
 
   render() {
     return (
       <>
-      {this.state.checkout === "false" || this.state.purchase === "true" ? <button onClick={this.handleCheckout}> checkout </button>: <></>}
-      {this.state.checkout === "true" && this.state.f1 === "false" ? <><F1 data={this.state.data}/><button onClick={this.handleF1Submit}> Next </button></>: <></>}
-      {this.state.f1 === "true" && this.state.f2 === "false" ? <><F2 /><button onClick={this.handleF2Submit}> Next </button></>: <></>}
-      {this.state.f2 === "true" && this.state.f3 === "false" ? <><F3 /><button onClick={this.handleF3Submit}> Next </button></>: <></>}
-      {this.state.f3 === "true" && this.state.checkout === "true" ? <><Confirmation data={this.state.data}/><button onClick={this.handlePurchase}> Purchase </button></>: <></>}
+        {this.state.current === "checkout" ? <button onClick={this.checkCurrent}> checkout {JSON.stringify(document.cookie, undefined, "\t")}</button> : <></>}
+        {this.state.current === "f1" ? <F1 checkCurrent={this.checkCurrent} handleChange={this.handleChange} /> : <></>}
+        {this.state.current === "f2" ? <F2 checkCurrent={this.checkCurrent} handleChange={this.handleChange} /> : <></>}
+        {this.state.current === "f3" ? <F3 checkCurrent={this.checkCurrent} handleChange={this.handleChange} /> : <></>}
+        {this.state.current === "purchase" ? <Confirmation data={this.state.data} handlePurchase={this.handlePurchase} /> : <></>}
       </>
     );
   }

@@ -1,47 +1,23 @@
 import React from "react"
 
-class F1 extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      contact: {
-        contact_name: props.data[0].contact_name,
-        contact_email: props.data[0].contact_email,
-        contact_password: props.data[0].contact_password,
-      },
-      edited: "false"
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    const { contact } = this.state;
-    contact[e.target.name] = e.target.value;
-    this.setState({ contact });
-  }
-
-  render() {
-    return (
+var F1 = ({checkCurrent, handleChange}) => (
       <>
         <h4>Contact information</h4>
         <table>
           <tbody>
             <tr>
-              <td><input type="text" placeholder="name" onChange={this.handleChange} />{' '}</td>
+              <td><input type="text" name="contact_name" placeholder="name" onChange={e => handleChange(e)} />{' '}</td>
             </tr>
             <tr>
-              <td><input type="text" placeholder="email" onChange={this.handleChange} />{' '}</td>
+              <td><input type="text" name="contact_email" placeholder="email" onChange={e => handleChange(e)} />{' '}</td>
             </tr>
             <tr>
-              <td><input type="text" placeholder="password" onChange={this.handleChange} />{' '}</td>
+              <td><input type="text" name="contact_password" placeholder="password" onChange={e => handleChange(e)} />{' '}</td>
             </tr>
           </tbody>
         </table >
+        <button onClick={e => checkCurrent()}> Next </button>
       </>
-    )
-  }
-}
+)
 
 export default F1;

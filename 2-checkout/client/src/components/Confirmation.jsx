@@ -1,22 +1,20 @@
-var Confirmation = ({ data }) => (
+var Confirmation = ({ data, handlePurchase}) => (
   <>
     <h4>Confirmation Page</h4>
-    <p>name: {data[0].contact_name}</p>
-    <p>email: {data[0].contact_email}</p>
-    <p>password: {data[0].contact_password}</p>
-    {/* contact_name: '',
-        contact_email: '',
-        contact_password: '',
-        add_line1: '',
-        add_line2: '',
-        add_city: '',
-        add_state: '',
-        add_zip: '',
-        add_phone: '',
-        credit_card: '',
-        credit_expiry: '',
-        credit_cvv: '',
-        credit_billingZip: '' */}
+    <p>name: {data.contact_name}</p>
+    <p>email: {data.contact_email}</p>
+    <p>password: {data.contact_password}</p>
+    <p>street: {data.add_line1}</p>
+    <p>apt/unit: {data.add_line2}</p>
+    <p>city: {data.add_city}</p>
+    <p>state: {data.add_state}</p>
+    <p>zip code: {data.add_zip}</p>
+    <p>phone: {data.add_phone}</p>
+    <p>credit card number: {data.credit_card}</p>
+    <p>expiry date: {data.credit_expiry}</p>
+    <p>cvv: {data.credit_cvv}</p>
+    <p>billing zip code: {data.credit_billingZip}</p>
+    <button onClick={e => handlePurchase()}> Purchase </button>
   </>
 )
 

@@ -48,9 +48,26 @@ const save = (data) => {
   // VALUES ("${data.contact_name}", "${data.contact_email}", "${data.contact_password}")`
   return db.queryAsync(
     `INSERT INTO infos
-    (contact_name, contact_email, contact_password)
+    (cookie_id, contact_name, contact_email, contact_password, add_line1, add_line2, add_city,
+    add_state, add_zip, add_phone, credit_card, credit_expiry, credit_cvv, credit_billingZip)
     VALUES
-    ("${data.contact_name}", "${data.contact_email}", "${data.contact_password}")`);
+    ("${data.cookie_id}", "${data.contact_name}", "${data.contact_email}", "${data.contact_password}",
+    "${data.add_line1}", "${data.add_line2}", "${data.add_city}", "${data.add_state}", "${data.add_zip}",
+    "${data.add_phone}", "${data.credit_card}", "${data.credit_expiry}", "${data.credit_cvv}", "${data.credit_billingZip}")
+    ON DUPLICATE KEY UPDATE
+    contact_name = "${data.contact_name}",
+    contact_email = "${data.contact_email}",
+    contact_password = "${data.contact_password}",
+    add_line1 = "${data.add_line1}",
+    add_line2 = "${data.add_line2}",
+    add_city = "${data.add_city}",
+    add_state = "${data.add_state}",
+    add_zip =  "${data.add_zip}",
+    add_phone = "${data.add_phone}",
+    credit_card = "${data.credit_card}",
+    credit_expiry = "${data.credit_expiry}",
+    credit_cvv = "${data.credit_cvv}",
+    credit_billingZip = "${data.credit_billingZip}"`);
   // db.query(q)
   // .then(() => {
   //   console.log(data);
