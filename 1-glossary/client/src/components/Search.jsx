@@ -19,17 +19,16 @@ class Search extends React.Component {
   }
 
   handleSearch() {
-    alert('A word was searched');
     this.props.onSearch(this.state.term);
   }
 
   render() {
-    return (<div>
-        <label>
-            <input type="text" value={this.state.term} onChange={this.handleSearchChange} />
-        </label>
-        <button onClick={this.handleSearch}> Search </button>
-      </div>)
+    return (
+    <div>
+      <input type="text" value={this.state.term} onChange={this.handleSearchChange} />
+      {' '}
+      <button onClick={this.handleSearch}> Search word </button>
+    </div>)
   }
 }
 

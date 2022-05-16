@@ -35,16 +35,12 @@ class Form extends React.Component {
   render() {
     return (<div>
       <h4>Add more words!</h4>
-        <label>
-            <h5>word:</h5>
-            <input type="text" value={this.state.inputWord} onChange={this.handleWordChange} />
-        </label>
-        <label>
-            <h5>definition:</h5>
-            <input type="text" value={this.state.inputDef} onChange={this.handleDefChange} />
-        </label>
-        <button onClick={this.handleSubmit}> Add Words </button>
-      </div>)
+      <input type="text" placeholder="word" value={this.state.inputWord} onChange={this.handleWordChange} />
+      {' '}
+      <input type="text" placeholder="definition" value={this.state.inputDef} onChange={this.handleDefChange} />
+      {' '}
+      <button onClick={this.handleSubmit}> Add Word </button>
+    </div>)
   }
 }
 

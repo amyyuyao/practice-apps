@@ -38,18 +38,12 @@ var filter = function (data) {
     // .exec();
 }
 
-
-// var getOne = function (data) {
-//   {word: data.word},
-//   {
-//     word: data.word,
-//     definition: data.definition
-//   },
-//   { upsert: true };
-// }
+var deleteWord = function (data) {
+  return Glossary.deleteOne({ word: data.word });
+}
 
 module.exports = {
   save,
   getAll,
-  filter,
+  deleteWord,
 };

@@ -18,6 +18,10 @@ class App extends React.Component {
     this.fetch = this.fetch.bind(this);
   }
 
+  componentDidMount() {
+    this.fetch();
+  }
+
   fetch() {
     axios.get('/glossary')
       .then((res) => {
@@ -52,23 +56,40 @@ class App extends React.Component {
       this.setState({
         display: arr
       })
+      if (arr.length === 0) {
+        alert('Searched word does not exist, change one!');
+      }
     }
+  }
+
+  delete(w) {
+    axios.post('/words', { word: w })
+    .then(() => {
+      this.fetch();
+    })
+    .catch((err) => {
+      console.log("DELETE FAILED", err);
+    })
   }
 
   render() {
     return (
       <div>
-        <h2>Here is Glossary!</h2>
+        <h2>Glossary</h2>
+        <br />
         <div>
           <Form onSubmit={this.submit.bind(this)} />
         </div>
+        <br />
         <div>
           <Search onSearch={this.search.bind(this)} />
         </div>
+        <br />
         <div>
           <WordList
           data={this.state.display.length ? this.state.display : this.state.data}
           onEdit={this.submit.bind(this)}
+          onDelete={this.delete.bind(this)}
           />
         </div>
       </div>
